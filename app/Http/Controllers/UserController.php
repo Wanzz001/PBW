@@ -1,37 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+// Nama: Wandi Ridwansyah
+// NIM: 6706220080
+// Kelas: 46-03
+class UserController extends User
 {
-    /**
-     * Display the registration view.
-     */
-    public function create(): View
+    public function index()
     {
-        return view('auth.register');
+        $users = User::all(); 
+        return view('user.daftarPengguna', compact('users'));
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    public function create()
+    {
+        return view('user.registrasi');
+    }
 
-    // Wandi Ridwansyah
-    //6706220080
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'username' => ['required', 'string', 'max:100'],
@@ -57,10 +49,13 @@ class RegisteredUserController extends Controller
             'gender' => $request->gender
         ]);
 
-        event(new Registered($user));
+        return redirect()->route('user.index');
 
-        //Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function show(User $user)
+    {
+        return view('user.infoPengguna', compact('user'));
     }
 }
