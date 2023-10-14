@@ -6,16 +6,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\DataTables\UsersDataTable;
 
 // Nama: Wandi Ridwansyah
 // NIM: 6706220080
 // Kelas: 46-03
 class UserController extends User
 {
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        $users = User::all(); 
-        return view('user.daftarPengguna', compact('users'));
+        return $dataTable->render('user.daftarPengguna');
     }
 
     public function create()

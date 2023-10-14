@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Collection;
-
+use App\DataTables\CollectionsDataTable;
 // Nama: Wandi Ridwansyah
 // NIM: 6706220080
 // Kelas: 46-03
 class CollectionController extends Controller
 {
-    public function index()
+    public function index(CollectionsDataTable $dataTable)
     {
-        $collections = Collection::all(); 
-        return view('koleksi.daftarKoleksi', compact('collections'));
+        return $dataTable->render('koleksi.daftarKoleksi');
     }
 
     public function create()

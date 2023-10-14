@@ -16,6 +16,8 @@ return [
     |
     */
 
+    'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
@@ -166,6 +168,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),

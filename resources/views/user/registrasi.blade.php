@@ -75,16 +75,12 @@
 
             <div class="flex items-center">
                 <input class="mr-2 leading-tight" type="radio" id="pria" name="gender" value="1" {{ old('gender') === '1' ? 'checked' : '' }} required autofocus>
-                <label class="text-white ml-2" for="pria">
-                    Pria
-                </label>
+                <x-input-label for="pria" :value="__('Pria')" />
             </div>
 
             <div class="flex items-center mt-2">
                 <input class="mr-2 leading-tight" type="radio" id="wanita" name="gender" value="0" {{ old('gender') === '0' ? 'checked' : '' }} required>
-                <label class="text-white ml-2" for="wanita">
-                    Wanita
-                </label>
+                <x-input-label for="wanita" :value="__('Wanita')" />
             </div>
 
             <x-input-error :messages="$errors->get('gender')" class="mt-2" />

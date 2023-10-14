@@ -9,15 +9,15 @@
 <!-- Kelas: 46-03 -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="container mx-auto p-4">
-                    <h1 class="text-2xl font-semibold mb-4 text-white">Detail User</h1>
-                    <div class="shadow-md rounded px-8 pt-6 pb-8 mb-4 text-white">
-                        <div class="mb-4 text-white">
+                    <h1 class="text-2xl font-semibold mb-4">Detail User</h1>
+                    <div class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <div class="mb-4">
                             <strong>Fullname: </strong> {{ $user->fullname }}
                         </div>
-                        <div class="mb-4 text-white">
+                        <div class="mb-4 ">
                             <strong>Email: </strong> {{ $user->email }}
                         </div>
                         <div class="mb-4">
@@ -50,7 +50,7 @@
                             <strong>Jenis Kelamin: </strong> {{ $gender }}
                         </div>
                     </div>
-                    <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded">
+                    <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">
                         Kembali ke Daftar User
                     </a>
                 </div>

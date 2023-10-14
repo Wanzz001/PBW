@@ -4,38 +4,27 @@
             {{ __('Users') }}
         </h2>
     </x-slot>
-<!-- Nama: Wandi Ridwansyah -->
-<!-- NIM: 6706220080 -->
-<!-- Kelas: 46-03 -->
+    <!-- Nama: Wandi Ridwansyah -->
+    <!-- NIM: 6706220080 -->
+    <!-- Kelas: 46-03 -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="container p-4">
-                    <h1 class="text-2xl font-semibold mb-4 text-white">Users</h1>
-
-                    <a href="{{ route('user.create')}}" class="text-white">Tambah User</a>
-
-                    <table class="ml-12 mt-6">
-                        <thead>
-                            <tr>
-                                <th class="border px-6 py-2 text-white">No</th>
-                                <th class="border px-6 py-2 text-white">Nama</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $index => $user)
-                            <tr>
-                                <td class="border px-6 py-2 text-white">{{ $index + 1 }}</td>
-                                <td class="border px-6 py-2 text-white">
-                                    <a href="{{ route('user.show', $user->id) }}">{{ $user->fullname }}</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <a href="{{ route('user.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">Tambah User</a>
+                    <div class="container mt-4">
+                        <div class="card">
+                            <div class="card-body overflow-x-auto">
+                                {{ $dataTable->table() }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @push('scripts')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    @endpush
 </x-app-layout>
