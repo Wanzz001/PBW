@@ -37,11 +37,13 @@ Route::get('/users', [UserController::class, 'index'])->name('user.index');
 Route::get('/userRegistration', [UserController::class, 'create'])->name('user.create');
 Route::post('/userStore', [UserController::class, 'store'])->name('user.store');
 Route::get('/userView/{user}', [UserController::class, 'show'])->name('user.show');
+Route::post('/userUpdate', [UserController::class, 'updateUser'])->name('user.update');
 
 Route::get('/koleksi', [CollectionController::class, 'index'])->name('collection.index');
 Route::get('/koleksiTambah', [CollectionController::class, 'create'])->name('collection.create');
 Route::post('/koleksiStore', [CollectionController::class, 'store'])->name('collection.store');
 Route::get('/koleksiView/{collection}', [CollectionController::class, 'show'])->name('collection.show');
+Route::post('/koleksiUpdate', [CollectionController::class, 'update'])->name('collection.update');
 
 
 require __DIR__.'/auth.php';

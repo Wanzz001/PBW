@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    {{-- bootstrap   --}}
+    <!-- {{-- bootstrap   --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     {{-- jquery --}}
@@ -35,11 +35,12 @@
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 
     <script src="{{asset('plugins/editor/js/dataTables.editor.js')}}"></script>
-    <script src="{{asset('plugins/editor/js/editor.bootstrap5.min.js')}}"></script>
+    <script src="{{asset('plugins/editor/js/editor.bootstrap5.min.js')}}"></script> -->
 
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">

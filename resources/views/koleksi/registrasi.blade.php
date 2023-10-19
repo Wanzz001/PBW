@@ -17,21 +17,21 @@
 
             <div class="flex items-center">
                 <input class="mr-2 leading-tight" type="radio" id="buku" name="jenisKoleksi" value="1" {{ old('jenisKoleksi') === '1' ? 'checked' : '' }} required autofocus>
-                <label class="text-white ml-2" for="buku">
+                <label class="ml-2" for="buku">
                     Buku
                 </label>
             </div>
 
             <div class="flex items-center mt-2">
                 <input class="mr-2 leading-tight" type="radio" id="majalah" name="jenisKoleksi" value="2" {{ old('jenisKoleksi') === '2' ? 'checked' : '' }} required>
-                <label class="text-white ml-2" for="majalah">
+                <label class="ml-2" for="majalah">
                     Majalah
                 </label>
             </div>
 
             <div class="flex items-center mt-2">
                 <input class="mr-2 leading-tight" type="radio" id="cakramDigital" name="jenisKoleksi" value="3" {{ old('jenisKoleksi') === '3' ? 'checked' : '' }} required>
-                <label class="text-white ml-2" for="cakramDigital">
+                <label class="ml-2" for="cakramDigital">
                     Cakram Digital
                 </label>
             </div>
