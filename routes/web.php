@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\DetailTransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,11 +39,22 @@ Route::get('/users', [UserController::class, 'index'])->name('user.index');
 Route::get('/userRegistration', [UserController::class, 'create'])->name('user.create');
 Route::post('/userStore', [UserController::class, 'store'])->name('user.store');
 Route::get('/userView/{user}', [UserController::class, 'show'])->name('user.show');
+Route::post('/userUpdate', [UserController::class, 'updateUser'])->name('user.update');
 
 Route::get('/koleksi', [CollectionController::class, 'index'])->name('collection.index');
 Route::get('/koleksiTambah', [CollectionController::class, 'create'])->name('collection.create');
 Route::post('/koleksiStore', [CollectionController::class, 'store'])->name('collection.store');
 Route::get('/koleksiView/{collection}', [CollectionController::class, 'show'])->name('collection.show');
+Route::post('/koleksiUpdate', [CollectionController::class, 'update'])->name('collection.update');
+
+Route::get('/transaksi', [TransactionController::class, 'index'])->name('transaction.index');
+Route::get('/transaksiTambah', [TransactionController::class, 'create'])->name('transaction.create');
+Route::post('/transaksiStore', [TransactionController::class, 'store'])->name('transaction.store');
+Route::get('/transaksiView/{transaction}', [TransactionController::class, 'show'])->name('transaction.show');
+
+route::get('/detailTransactionKembalikan/{detailTransactionId}', [DetailTransactionController::class, 'detailTransactionKembalikan'])->name('detailTransactionKembali');
+Route::post('/detailTransactionUpdate', [DetailTransactionController::class, 'update'])->name('detailTransaction.update');
+
 
 
 require __DIR__.'/auth.php';

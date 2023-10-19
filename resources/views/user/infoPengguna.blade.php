@@ -1,60 +1,106 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
-        </h2>
-    </x-slot>
-<!-- Nama: Wandi Ridwansyah -->
-<!-- NIM: 6706220080 -->
-<!-- Kelas: 46-03 -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="w-full max-w-screen-xl mx-auto px-6 py-4 bg-white shadow-md sm:rounded-lg">
+            <form method="POST" action="{{ route('user.update') }}">
+                @csrf
 
-                <div class="container mx-auto p-4">
-                    <h1 class="text-2xl font-semibold mb-4">Detail User</h1>
-                    <div class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                        <div class="mb-4">
-                            <strong>Fullname: </strong> {{ $user->fullname }}
-                        </div>
-                        <div class="mb-4 ">
-                            <strong>Email: </strong> {{ $user->email }}
-                        </div>
-                        <div class="mb-4">
-                            <strong>Username: </strong> {{ $user->username }}
-                        </div>
-                        <div class="mb-4">
-                            <strong>Alamat: </strong> {{ $user->address }}
-                        </div>
-                        <div class="mb-4">
-                            <strong>No Telepon: </strong> {{ $user->phoneNumber }}
-                        </div>
-                        <div class="mb-4">
-                            <strong>Tanggal Lahir: </strong> {{ $user->birthdate}}
-                        </div>
-                        <div class="mb-4">
-                            <strong>Agama: </strong> {{ $user->religion }}
-                        </div>
-                        @php
-                        $gender = '';
-                        switch ($user->gender) {
-                        case 0:
-                        $gender = 'Wanita';
-                        break;
-                        case 1:
-                        $gender = 'Pria';
-                        break;
-                        }
-                        @endphp
-                        <div class="mb-4">
-                            <strong>Jenis Kelamin: </strong> {{ $gender }}
-                        </div>
-                    </div>
-                    <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">
-                        Kembali ke Daftar User
-                    </a>
+                <div class="mt-4">
+                    <x-input-label for="idUser" :value="__('ID User')" />
+                    <x-text-input id="idUser" class="block mt-1 w-full" type="text" name="id" :value="$user -> id" readonly />
                 </div>
-            </div>
+
+                <!-- UserName -->
+                <div class="mt-4">
+                    <x-input-label for="username" :value="__('Username')" />
+                    <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="$user -> username" required autofocus autocomplete="username" readonly />
+                    <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                </div>
+
+                <!-- FullName -->
+                <div class="mt-4">
+                    <x-input-label for="fullname" :value="__('Fullname')" />
+                    <x-text-input id="fullname" class="block mt-1 w-full" type="text" name="fullname" :value="$user -> fullname" required autofocus autocomplete="fullname" />
+                    <x-input-error :messages="$errors->get('fullname')" class="mt-2" />
+                </div>
+
+                <!-- Email Address -->
+                <div class="mt-4">
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$user -> email" required autocomplete="username" readonly />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <!-- Password -->
+                <div class="mt-4">
+                    <x-input-label for="password" :value="__('Password')" />
+                    <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mt-4">
+                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                    <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                </div>
+
+                <!-- alamat -->
+                <div class="mt-4">
+                    <x-input-label for="address" :value="__('Alamat')" />
+                    <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="$user -> address" required autofocus autocomplete="address" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                </div>
+
+                <!-- TanggalLahir -->
+                <div class="mt-4">
+                    <x-input-label for="birthdate" :value="__('Tanggal Lahir')" />
+                    <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="$user -> birthdate" required autofocus autocomplete="birthdate" readonly />
+                    <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
+                </div>
+
+                <!-- no telepon -->
+                <div class="mt-4">
+                    <x-input-label for="phonenumber" :value="__('No Telepon')" />
+                    <x-text-input id="phonenumber" class="block mt-1 w-full" type="text" name="phonenumber" :value="$user -> phoneNumber" required autofocus autocomplete="phonenumber" />
+                    <x-input-error :messages="$errors->get('phonenumber')" class="mt-2" />
+                </div>
+
+                <!-- agama -->
+                <div class="mt-4">
+                    <x-input-label for="religion" :value="__('Agama')" />
+                    <x-text-input id="religion" class="block mt-1 w-full" type="text" name="religion" :value="$user -> religion" required autofocus autocomplete="religion" readonly />
+                    <x-input-error :messages="$errors->get('religion')" class="mt-2" />
+                </div>
+
+                <!-- gender -->
+                <div class="mt-4">
+                    <x-input-label for="gender" :value="__('Jenis Kelamin')" />
+
+                    <div class="flex items-center">
+                        <input class="mr-2 leading-tight" type="radio" id="pria" name="gender" value="1" @if(old('gender', $user->gender) == 1) checked @endif required autofocus disabled>
+                        <x-input-label for="pria" :value="__('Pria')" />
+                    </div>
+
+                    <div class="flex items-center mt-2">
+                        <input class="mr-2 leading-tight" type="radio" id="wanita" name="gender" value="0" @if(old('gender', $user->gender) == 0) checked @endif required disabled>
+                        <x-input-label for="wanita" :value="__('Wanita')" />
+                    </div>
+
+                    <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+                </div>
+                <!-- Wandi Ridwansyah -->
+                <!-- 6706220080 -->
+
+
+
+                <div class="flex items-center justify-end mt-4">
+                    <x-primary-button class="ml-4">
+                        {{ __('Update') }}
+                    </x-primary-button>
+                </div>
+            </form>
         </div>
     </div>
 </x-app-layout>

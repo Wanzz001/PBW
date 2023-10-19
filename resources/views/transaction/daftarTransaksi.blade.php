@@ -10,7 +10,7 @@
     </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Transaksi') }}
         </h2>
     </x-slot>
     <!-- Nama: Wandi Ridwansyah -->
@@ -21,7 +21,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="container p-4">
-                    <a href="{{ route('user.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">Tambah User</a>
+                    <a href="{{ route('transaction.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">Tambah Transaksi</a>
                     <div class="container mt-4">
                         <div class="card">
                             <div class="card-body overflow-x-auto">

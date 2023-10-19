@@ -10,18 +10,29 @@
     </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Transaksi') }}
         </h2>
     </x-slot>
-    <!-- Nama: Wandi Ridwansyah -->
-    <!-- NIM: 6706220080 -->
-    <!-- Kelas: 46-03 -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
+                @csrf
+
+                <!-- Wandi Ridwansyah -->
+                <!-- 6706228808 -->
                 <div class="container p-4">
-                    <a href="{{ route('user.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3">Tambah User</a>
+                    <div class="mt-4">
+                        <x-input-label for="peminjam" :value="__('Peminjam')" />
+                        <x-text-input id="peminjam" class="block mt-1 w-full" type="text" name="peminjam" :value="$transactionData->fullnamePeminjam" readonly />
+                    </div>
+
+
+                    <div class="mt-4">
+                        <x-input-label for="petugas" :value="__('Petugas')" />
+                        <x-text-input id="petugas" class="block mt-1 w-full" type="text" name="petugas" :value="$transactionData->fullnamePetugas" readonly />
+                    </div>
+
                     <div class="container mt-4">
                         <div class="card">
                             <div class="card-body overflow-x-auto">
