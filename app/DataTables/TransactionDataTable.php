@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -26,12 +27,6 @@ class TransactionDataTable extends DataTable
             ->setRowId('id')
             ->addColumn('action', function ($data) {
                 return $this->getActionColumn($data);
-            })
-            ->editColumn('userIdPeminjam', function ($data) {
-                return $data->peminjam->fullname;
-            })
-            ->editColumn('userIdPetugas', function ($data) {
-                return $data->petugas->fullname;
             });
     }
 
@@ -40,7 +35,27 @@ class TransactionDataTable extends DataTable
      */
     public function query(Transaction $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model
+            ->newQuery()
+            ->select(
+                't.id as id',
+                'u.name as peminjam',
+                'v.name as kendaraan',
+                't.startDate as start',
+                't.endDate as end',
+                't.price as price',
+                't.status',
+                DB::raw('
+                (CASE
+                WHEN t.status="1" THEN "Pinjam"
+                WHEN t.status="2" THEN "Kembali"
+                WHEN t.status="3" THEN "Hilang"
+                END) AS status
+                '),
+                )
+                ->from('transaction','t')
+                ->join('users as u', 'u.id', '=', 't.userId')
+                ->join('vehicles as v', 'v.id', '=', 't.vehicleId');
     }
 
     /**
@@ -64,12 +79,12 @@ class TransactionDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::computed('userIdPetugas')
-                ->title('Petugas'),
-            Column::computed('userIdPeminjam')
-                ->title('Peminjam'),
-            Column::make('tanggalPinjam'),
-            Column::make('tanggalSelesai'),
+            Column::make('peminjam'),
+            Column::make('kendaraan'),
+            Column::make('start') -> title('Tanggal Pinjam'),
+            Column::make('end') -> title('Tanggal Selesai'),
+            Column::make('price') -> title('Harga'),
+            Column::make('status'),
             Column::computed('action')
                 ->title('Action')
                 ->exportable(false)
@@ -91,7 +106,7 @@ class TransactionDataTable extends DataTable
 
     protected function getActionColumn($data): string
     {
-        $showUrl = route('transaction.show', $data->id);
-        return "<a class='waves-effect btn btn-success' data-value='$data->id' href='$showUrl'><i class='material-icons'>View</a>";
+        $showUrl = route('transaksi.edit', $data->id);
+        return "<a class='waves-effect btn btn-success' data-value='$data->id' href='$showUrl'><i class='material-icons'>Edit</a>";
     }
 }

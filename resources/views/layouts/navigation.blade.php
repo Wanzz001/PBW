@@ -15,16 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
-                        {{ __('Collections') }}
+                    <x-nav-link :href="route('vehicles.index')" :active="request()->routeIs('vehicles.index')">
+                        {{ __('Daftar Kendaraan') }}
                     </x-nav-link>
-
-                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
-                        {{ __('Users') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('transaction.index')" :active="request()->routeIs('transaction.index')">
-                        {{ __('Transaksi') }}
+                    <x-nav-link :href="route('transaksi.index')" :active="request()->routeIs('transaksi.index')">
+                        {{ __('Daftar Transaksi') }}
                     </x-nav-link>
                 </div>
             </div>

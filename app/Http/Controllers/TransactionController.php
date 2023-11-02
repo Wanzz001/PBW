@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\DetailTransactionDataTable;
 use App\DataTables\TransactionDataTable;
-use App\Models\Collection;
-use App\Models\DetailTransaction;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
-
-// Nama: Wandi Ridwansyah
-// NIM: 6706220080
-// Kelas: 46-03
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -23,9 +16,8 @@ class TransactionController extends Controller
      */
     public function index(TransactionDataTable $dataTable)
     {
-        return $dataTable->render('transaction.daftarTransaksi');
+        return $dataTable->render('transaksi.daftarTransaksi');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -33,8 +25,8 @@ class TransactionController extends Controller
     public function create()
     {
         $users = User::get();
-        $collections = Collection::where('jumlahKoleksi', '>', 0)->get();
-        return view('transaction.transaksiTambah', compact('collections', 'users'));
+        $vehicles = Vehicle::get();
+        return view('transaksi.peminjaman', compact('vehicles', 'users'));
     }
 
     /**
@@ -44,83 +36,66 @@ class TransactionController extends Controller
     {
         $request->validate([
             'idPeminjam' => ['required', 'integer'],
-            'idKoleksi1' => ['required', 'integer'],
-            'idKoleksi2' => ['required', 'integer'],
+            'idKendaraan' => ['required', 'integer'],
+            'startDate' => ['required', 'date'],
+            'endDate' => ['required', 'date'],
         ]);
+
+        $start = new \DateTime($request->startDate);
+        $end = new \DateTime($request->endDate);
+        $interval = $start->diff($end);
+        $numberOfDays = $interval->days;
+
+        $vehicle = Vehicle::find($request->idKendaraan);
+        $dailyPrice = $vehicle->dailyPrice;
+
+        $totalPrice = $dailyPrice * $numberOfDays;
 
         $transaction = new Transaction;
 
-        $transaction->userIdPeminjam = $request->idPeminjam;
-        $transaction->userIdPetugas = auth()->user()->id;
-        $transaction->tanggalPinjam = Carbon::now()->toDateString();
+        $transaction->userId = $request->idPeminjam;
+        $transaction->vehicleId = $request->idKendaraan;
+        $transaction->startDate = $request->startDate;
+        $transaction->endDate = $request->endDate;
+        $transaction->price = $totalPrice;
+        $transaction->status = 1;
+
         $transaction->save();
-        $lastTransactionId = $transaction->id;
 
-        DetailTransaction::create([
-            'transactionId' => $lastTransactionId,
-            'collectionId' => $request->idKoleksi1,
-            'status' => 1
-        ]);
-        DB::table('collections')->where('id', $request->idKoleksi1)->decrement('jumlahKoleksi');
+        return redirect()->route('transaksi.index');
+    }
 
-        if ($request->idKoleksi2 > 0) {
-            DetailTransaction::create([
-                'transactionId' => $lastTransactionId,
-                'collectionId' => $request->idKoleksi2,
-                'status' => 1
-            ]);
-            DB::table('collections')->where('id', $request->idKoleksi2)->decrement('jumlahKoleksi');
-        }
-        return redirect()->route('transaction.index');
+
+    public function edit(string $id)
+    {
+        $transaksi = DB::table('transaction as t')
+            ->select(
+                't.id as id',
+                'u.name as peminjam',
+                'v.name as kendaraan',
+                't.startDate as start',
+                't.endDate as end',
+                't.price as price',
+                't.status as status',
+            )
+            ->join('users as u', 'u.id', '=', 't.userId')
+            ->join('vehicles as v', 'v.id', '=', 't.vehicleId')
+            ->where('t.id', '=', $id)
+            ->first();
+
+        return view('transaksi.pengembalian', compact('transaksi'));
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      */
-
-    public function getTransactionData(Transaction $transaction)
+    public function update(Request $request)
     {
-        $transactionData = DB::table('transactions')
-            ->select(
-                'transactions.id as id',
-                'u1.fullname as fullnamePeminjam',
-                'u2.fullname as fullnamePetugas',
-                'tanggalPinjam',
-                'tanggalSelesai'
-            )
-            ->join('users as u1', 'transactions.userIdPeminjam', '=', 'u1.id')
-            ->join('users as u2', 'transactions.userIdPetugas', '=', 'u2.id')
-            ->where('transactions.id', $transaction->id)
-            ->first();
-
-        return $transactionData;
-    }
-
-    public function show(Transaction $transaction, DetailTransactionDataTable $dataTable)
-    {
-        $transactionData = $this->getTransactionData($transaction);
-
-        $dataTable->setIdTransaksi($transaction->id);
-
-        return $dataTable->render('transaction.transaksiView', compact('transactionData'));
-    }
-
-
-    public function getDetailTransactionData(Transaction $transaction)
-    {
-        $detailTransactionData = DB::table('transactions')
-            ->select(
-                'transactions.id as id',
-                'u1.fullname as fullnamePeminjam',
-                'u2.fullname as fullnamePetugas',
-                'tanggalPinjam',
-                'tanggalSelesai'
-            )
-            ->join('users as u1', 'transactions.userIdPeminjam', '=', 'u1.id')
-            ->join('users as u2', 'transactions.userIdPetugas', '=', 'u2.id')
-            ->where('transactions.id', $transaction->id)
-            ->first();
-
-        return $detailTransactionData;
+        DB::table('transaction')
+            ->where('id', '=', $request->idTransaksi)
+            ->update([
+                'status' => $request->status
+            ]);
+        return redirect()->route('transaksi.index');
     }
 }
